@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart Clone - India's Biggest Online Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1><i class="fas fa-shopping-bag"></i> Flipkart</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search for products, brands and more">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="nav-actions">
+                    <button id="userBtn" class="user-btn">
+                        <i class="fas fa-user"></i>
+                        <span>Login</span>
+                    </button>
+                    <button id="cartBtn" class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                        <span id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <aside class="filters-sidebar">
+            <div class="filter-section">
+                <h3>Categories</h3>
+                <div class="filter-options">
+                    <label><input type="checkbox" class="category-filter" value="electronics"> Electronics</label>
+                    <label><input type="checkbox" class="category-filter" value="clothing"> Clothing</label>
+                    <label><input type="checkbox" class="category-filter" value="books"> Books</label>
+                    <label><input type="checkbox" class="category-filter" value="home"> Home & Garden</label>
+                    <label><input type="checkbox" class="category-filter" value="sports"> Sports</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Price Range</h3>
+                <div class="price-range">
+                    <input type="range" id="minPrice" min="0" max="50000" value="0">
+                    <input type="range" id="maxPrice" min="0" max="50000" value="50000">
+                    <div class="price-display">
+                        <span id="minPriceDisplay">₹0</span> - <span id="maxPriceDisplay">₹50000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Rating</h3>
+                <div class="filter-options">
+                    <label><input type="checkbox" class="rating-filter" value="4"> 4+ Stars</label>
+                    <label><input type="checkbox" class="rating-filter" value="3"> 3+ Stars</label>
+                    <label><input type="checkbox" class="rating-filter" value="2"> 2+ Stars</label>
+                    <label><input type="checkbox" class="rating-filter" value="1"> 1+ Stars</label>
+                </div>
+            </div>
+
+            <button id="clearFilters" class="clear-filters-btn">Clear All Filters</button>
+        </aside>
+
+        <section class="products-section">
+            <div class="products-header">
+                <div class="results-count">
+                    <span id="resultsText">Showing 12 products</span>
+                </div>
+                <div class="sort-options">
+                    <label for="sortSelect">Sort by:</label>
+                    <select id="sortSelect">
+                        <option value="name">Name</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Rating</option>
+                        <option value="newest">Newest</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically generated here -->
+            </div>
+
+            <div class="pagination">
+                <button id="prevPage" class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                <div class="page-numbers" id="pageNumbers"></div>
+                <button id="nextPage" class="page-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-shopping-cart"></i> My Cart</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div id="cartItems" class="cart-items">
+                <!-- Cart items will be displayed here -->
+            </div>
+            <div class="cart-total">
+                <strong>Total: ₹<span id="cartTotal">0.00</span></strong>
+            </div>
+            <div class="cart-actions">
+                <button id="continueShopping" class="btn-secondary">Continue Shopping</button>
+                <button id="checkoutBtn" class="btn-primary">Place Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content checkout-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-credit-card"></i> Checkout</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="checkoutForm" class="checkout-form">
+                <div class="checkout-step" id="step1">
+                    <h3><i class="fas fa-map-marker-alt"></i> Delivery Address</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Complete Address</label>
+                        <input type="text" id="address" required placeholder="House no., Street, Area">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">PIN Code</label>
+                            <input type="text" id="zipCode" required>
+                        </div>
+                    </div>
+                    <button type="button" id="nextToPayment" class="btn-primary">Continue to Payment</button>
+                </div>
+
+                <div class="checkout-step" id="step2" style="display: none;">
+                    <h3><i class="fas fa-credit-card"></i> Payment Details</h3>
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" required>
+                        </div>
+                    </div>
+                    <div class="checkout-actions">
+                        <button type="button" id="backToShipping" class="btn-secondary">Back</button>
+                        <button type="submit" class="btn-primary">Pay Now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you for shopping with us. Your order has been confirmed.</p>
+            <p>Order ID: <span id="orderId"></span></p>
+            <button id="closeSuccess" class="btn-primary">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
